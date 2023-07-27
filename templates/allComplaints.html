@@ -1,0 +1,110 @@
+{% extends 'OE_dashboard.html'%}
+{%  block  all_complaint_by_user %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.4.1/css/dataTables.dateTime.min.css" />
+
+<link rel="stylesheet" href="{% static 'css/styles.css'%}">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js"></script>
+<div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg  border-primary-subtle ">
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tbody>
+            <tr>
+                <td>Minimum date:</td>
+                <td><input type="text" id="min" class="form-control"name="min"></td>
+            </tr>
+            <tr>
+                <td>Maximum date:</td>
+                <td><input type="text" id="max" class="form-control"name="max"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class=" container-fluid ">
+        <table id="table_id" class="table  table-responsive  table-striped ">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Premise ID</th>
+                    <th>Pest Type</th>
+                    <th>Severity</th>
+                    <th>Remark</th>
+                    <th>Date(MM/DD/YY)</th>
+                    <th>Current Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in allComplaints %}
+                    <tr>
+                        <td>{{c.id}}</td>
+                        <td>{{c.user_id}}</td>
+                        <td>{{c.premise_id}}</td>
+                        <td>{{c.pest_type}}</td>
+                        <td>{{c.severity}}</td>
+                        <td>{{c.remark}}</td>
+                        <td>{{c.date}}</td>
+                        <td>{{c.status}}</td>
+                        <td> <a href="{% url 'view_logs' c.id %}" class="btn btn-success btn-sm">view Logs</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // window.addEventListener('DOMContentLoaded', event => {
+    //     // Simple-DataTables
+    //     // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+    //     const datatablesSimple = document.getElementById('table_id');
+    //     if (datatablesSimple) {
+    //         new simpleDatatables.DataTable(datatablesSimple);
+    //     }
+    // });  
+    var minDate, maxDate;
+
+    // Custom filtering function which will search data in column four between two values
+    DataTable.ext.search.push(function (settings, data, dataIndex) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date(data[4]);
+
+        if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+        ) {
+            return true;
+        }
+        return false;
+    });
+
+    // Create date inputs
+    minDate = new DateTime('#min', {
+        format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime('#max', {
+        format: 'MMMM Do YYYY'
+    });
+
+    // DataTables initialisation
+    var table = $('#table_id').DataTable({
+        responsive: true
+
+    });
+
+    // Refilter the table
+    $('#min, #max').on('change', function () {
+        table.draw();
+    });
+</script>
+{% endblock %}

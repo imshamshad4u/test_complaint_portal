@@ -1,0 +1,180 @@
+{% extends 'OE_dashboard.html'%}
+{% block all_complaint_table %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        table {
+            display: none;
+        }
+
+        .button-container {
+            display: flex;
+            /* padding: 5px; */
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .button-container button {
+            flex: 1;
+            min-height: 90px;
+            /* margin-right: 10px; */
+            color: aliceblue;
+            background-color: rgb(12, 63, 12);
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <table class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col" id="Under_Scrutiny">Under Scrutiny Complaints</th>
+            <th scope="col" id="Progressed_complaints">Progressed complaints</th>
+            <th scope="col" id="Resolved_complaints">Resolved complaints</th>
+            <th scope="col" id="Cannot_be_addressed">Could not be Addressed Complaints</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table> -->
+
+    <div class="button-container ">
+
+        <button class="m-2" style="background-color: rgb(24, 43, 43);"
+            onclick="showTable('under_scrutiny','{{complaint_status}}')">Under Scrutiny Complaints</button>
+        <button class="m-2" style="background-color: rgb(118, 178, 178);"
+            onclick="showTable('progressed','{{complaint_status}}')">Progressed Complaints</button>
+        <button class="m-2" onclick="showTable('resolved','{{complaint_status}}')">Resolved Complaints</button>
+        <button class="m-2 " style="background-color: rgb(42, 94, 143);"
+            onclick="showTable('not_addressed','{{complaint_status}}')">Could not be Addressed Complaints</button>
+    </div>
+    <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg">
+
+        <table id="{{complaint_status}}" class="table table-success table-striped">
+            <!-- Table content for Under Scrutiny Complaints -->
+            <!-- <th>under_scrutiny</th> -->
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Premise</th>
+                    <th scope="col">Pest Type</th>
+                    <th scope="col">Severity</th>
+                    <th scope="col">Remark </th>
+                    <th scope="col">Date(yy/mm/dd) </th>
+                    <th scope="col">Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in status %}
+
+                <tr>
+                    <!-- <th scope="row">#</th> -->
+                    <td> {{s.id}}</td>
+
+                    <td> {{s.user_id}}</td>
+                    <td> {{s.premise_id}}</td>
+                    <td> {{s.pest_type}}</td>
+                    <td> {{s.severity}}</td>
+                    <td> {{s.remark}}</td>
+                    <td> {{s.date}}</td>
+                    <td>
+                        <form id="myForm">
+                            {% csrf_token %}
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                id="select_status">
+                                <option selected>--Select--</option>
+                                <option value="progressed">Progressed</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="not_addressed">Not Addressed</option>
+                            </select>
+                            <button type="submit" class="btn btn-success btn-sm mt-1"> Update Status</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+        function showTable(tableId, complaint_status) {
+            // Hide all tables
+            var tables = document.getElementsByTagName('table');
+            for (var i = 0; i < tables.length; i++) {
+                tables[i].style.display = 'none';
+            }
+
+            // Show the selected table
+            // if (table){
+            var table = document.getElementById(tableId);
+
+            if (tableId === complaint_status) {
+                if (table) {
+                    table.style.display = "table";
+                }
+                else {
+                    console.log('not found!')
+                }
+            }
+            else {
+                alert(`There are no complaints with the status of ${tableId}`);
+
+            }
+            // }
+            // else{
+            //     table.style.dispaly="none";
+            // }
+        }
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                // Get the selected status value
+                var selectedStatus = $("#select_status").val();
+
+                // Get the complaint ID from the URL
+                var complaintID = window.location.href.split("/")[4];
+
+                // Make the AJAX POST request
+                $.ajax({
+                    url: "/update_complaint_status/" + complaintID,  // Update the URL to the appropriate endpoint
+                    type: "POST",
+                    data: {
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                        "status": selectedStatus
+                    },
+                    success: function (response) {
+                        // Handle the success response
+                        console.log('Status updated successfully');
+                        alert("Status updated successfully!")
+                        // Perform any additional actions or update the UI as needed
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // Handle any errors
+                        console.log(xhr.status + ": " + xhr.responseText);
+                        alert("Something Went Wrong!")
+
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+{% endblock %}

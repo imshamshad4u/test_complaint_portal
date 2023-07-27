@@ -1,0 +1,98 @@
+{% extends 'OE_dashboard.html'%}
+
+{%block complain_form %}
+{%if messages%}
+<div class="alert alert-success" role="alert">
+    Form submitted successfully!
+</div>
+{% else %}
+
+<head>
+    <style>
+        .form-control:disabled {
+            background-color: #f5f5f5;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<!-- <div class="container-fluid card mt-2" style="width: 60rem;"> -->
+<div class="container-fluid  mt-3 shadow-lg d-flex justify-content-center align-items-center"
+    style="width: 60rem;min-height: 50vh;background-color: #fff;color:rgb(21, 47, 39)">
+    <form action="{% url 'complain' %}" method="POST">
+    <!-- <form action="" method="POST"> -->
+
+        {%  csrf_token %}
+        <div class=" row mb-3 ">
+            <div class="col-6">
+                <label for="name" class="form-label"><b> Name </b><span style="color:red;">*</span></label>
+                <input type="text" class="form-control " name="name" id="name" aria-describedby="emailHelp" required
+                    value="{{name}}" readonly disabled>
+            </div>
+            <div class="col-6">
+                <label for="exampleInputEmail1" class="form-label"><b> Email </b><span
+                        style="color:red;">*</span></label>
+                <input type="email" class="form-control " name="email" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" value="{{email}}" required readonly disabled>
+            </div>
+        </div>
+
+        <div class=" row mb-3 ">
+            <div class="col-6">
+                <label for="exampleInputContact" class="form-label"><b> Contact Number </b><span
+                        style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="exampleInputContact" name="contact" value="{{contact}}"
+                    required readonly disabled>
+            </div>
+            <div class="col-6">
+                <label for="premise" class="form-label"><b> Premise </b><span style="color:red;">*</span></label>
+                <select class="form-select  " aria-label=".form-select-sm example" name="premise" id="premise" readonly
+                    disabled required>
+                    <option selected>{{premise}}</option>
+
+                </select>
+            </div>
+        </div>
+        <div class=" row mb-3 ">
+            <div class="col-6">
+                <label for="Pest_type" class="form-label"><b> Pest Type </b><span style="color:red;">*</span></label>
+                <select class="form-select  " aria-label=".form-select-sm example" name="pest_type" required>
+                    <option selected>--Select Pest Type--</option>
+                    <option value="Cockroaches">Cockroaches</option>
+                    <option value="Termites">Termites</option>
+                    <option value="Mosquitoes">Mosquitoes</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="Pest_type" class="form-label"><b>Severity </b><span style="color:red;">*</span></label>
+                <select class="form-select  " aria-label=".form-select-sm example" name="severity" required>
+                    <option selected>--Select Medium--</option>
+
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+
+                </select>
+            </div>
+        </div>
+        <div class=" row mb-3 ">
+            <div class="col-6">
+                <label for="date" class="form-label"><b> Date </b><span style="color:red;">*</span></label>
+                <input class="form-control" id="date" name="date" type="date" required></textarea>
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlTextarea1" class="form-label"><b> Remark </b><span
+                        style="color:red;">*</span></label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name='remark' rows="2"
+                    required></textarea>
+            </div>
+
+        </div>
+
+
+
+        <button type="submit" class="btn btn-success mb-1">Submit</button>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

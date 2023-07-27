@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% block content %}
+<h2 style="text-align:center">    <span>Login to Continue!</span>
+</h2>
+
+<div class="container card mt-3 shadow-lg d-flex justify-content-center align-items-center" style="width: 30rem;min-height: 50vh;background-color: rgb(12, 30, 46);color:rgb(188, 233, 218)">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message | safe }}
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+    <form action="" method="POST" id="myForm">
+        {%  csrf_token %}
+
+
+        <div class="mb-3 ">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" required
+                placeholder="Email or mobile No.">
+        </div>
+        <button type="submit" class="btn btn-success mb-1">Submit</button>
+    </form>
+</div>
+<script>
+    
+</script>
+
+{%endblock%}

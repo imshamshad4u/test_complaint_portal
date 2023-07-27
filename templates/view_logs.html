@@ -1,0 +1,25 @@
+{% extends 'OE_dashboard.html'%}
+{% block view_logs %}
+
+<div class=" container card card-body mt-2 ">
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Modified By</th>
+                <th>Date & time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer_status_log in customer_status_log_list %}
+                <tr>
+                    <td>{{ customer_status_log.complaint_id }}</td>
+                    <td>{{ customer_status_log.message }}</td>
+                    <td>{{ customer_status_log.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

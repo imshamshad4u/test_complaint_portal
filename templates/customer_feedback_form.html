@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Feedback</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        form {
+            margin: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex m m-5">
+        <div class="container-fluid card"
+            style="width: 40rem;min-height: 50vh;background-color: rgb(70, 104, 134);color:aliceblue">
+            <h3 style="color:aliceblue;"> Rate Us as per our service <emoji alt="Very Good">😊!</emoji>
+            </h3>
+            <form action="" method="POST" >
+                {% csrf_token %}
+                <div class="container text-center">
+                    <div class="row align-items-center ">
+                        <div class="col">
+                            <label for="excellent">
+                                <emoji alt="Excellent">🤩Excellent </emoji>
+                            </label>
+                            <input id="excellent" value="excellent" name="feedback" type="radio">
+                        </div>
+                        <div class="col">
+                            <label for="very_good">
+                                <emoji alt="Very Good">😊 Very Good</emoji>
+                            </label>
+                            <input type="radio" value="veryGood" name="feedback" id="very_good">
+
+                        </div>
+
+                        <div class="col">
+                            <label for="average">
+                                <emoji alt="Average">🙁 Average</emoji>
+                            </label>
+                            <input type="radio" name="feedback" value="average" id="average">
+                        </div>
+                        <div class="col">
+                            <label for="below_average">
+                                <emoji alt="Below Average">😖 Below Average</emoji>
+                            </label>
+                            <input type="radio" value="belowAverage" name="feedback" id="below_average">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-success btn-sm">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

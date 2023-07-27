@@ -1,0 +1,23 @@
+{%extends 'home.html'%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {%load static%}
+    {% load crispy_forms_tags %}
+    {%block home%}
+    <div class="container mt-4 bg-white p-3">
+        <a class="btn btn-primary" href="{% url 'social:begin' 'google-oauth2' %}"> <i
+                class="fab fa-google"></i>&nbsp;Login</a>
+    </div>
+    {%endblock%}
+</body>
+
+</html>
