@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -16,8 +17,14 @@
 
 <body>
     <div class="d-flex m m-5">
+        
         <div class="container-fluid card"
             style="width: 40rem;min-height: 50vh;background-color: rgb(70, 104, 134);color:aliceblue">
+            {% if messages %}
+                {% for msg in messages%}
+                    {{msg}}
+                {% endfor %}     
+            {% endif %}
             <h3 style="color:aliceblue;"> Rate Us as per our service <emoji alt="Very Good">😊!</emoji>
             </h3>
             <form action="" method="POST" >

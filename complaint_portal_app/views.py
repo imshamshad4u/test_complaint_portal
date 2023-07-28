@@ -521,11 +521,22 @@ def update_complaint_status(request, id):
         customer_status_Log = Customer_status_Log(
             complaint_request_status=complaint, complaint_id=id, message=msg)
         customer_status_Log.save()
-
         subject = 'Complaint Status Update'
         email_message = f'Your complaint with ID {id} has been updated to {status}.'
-        send_mail(subject, email_message, f'{request.user.email}', [
-                  complaint.user.email])
+        if complaint.status=="resolved":
+            context = {
+            'name': f'{complaint.user.username}',
+            # 'link':'https://chat.openai.com/'
+            'link': 'alamshamshad598.pythonanywhere.com/complaint_feedback'
+        }
+            html_message = render_to_string('send_email.html', context)
+            plain_message = strip_tags(html_message)
+            send_mail(subject, plain_message, f'{request.user.email}',  [
+                    complaint.user.email], html_message=html_message)
+        else:
+            
+            send_mail(subject, email_message, f'{request.user.email}', [
+                    complaint.user.email])
         return JsonResponse({"success": True})
     except Customer_complaint.DoesNotExist:
         return JsonResponse({"success": False})
@@ -545,5 +556,6 @@ def complaint_feedback(request):
         message = f'Your Feedback for complaint ID {customer_complaint.id} has been received successfuly!.'
         send_mail(subject, message, f'{request.user.email}', [
                   customer_complaint.user.email])
+        messages.success(request,"Thank You for giving us feedback! have a great day")
     return render(request, 'customer_feedback_form.html')
 
