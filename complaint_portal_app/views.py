@@ -350,6 +350,25 @@ def view_logs(request, id):
     return render(request, "view_logs.html", context)
 
 
+
+
+### Prifile details start ####
+def myProfile(request,id):
+    premise_name=""
+    if request.user.is_staff:
+        operation_executive = OE_list.objects.filter(user=request.user).first()
+        premise_name = operation_executive.OE_premise
+        print("operation executive: ",operation_executive)
+    else:
+        customer=Customer.objects.get(user=request.user)
+        premise_name=customer.premise
+        print("customer premise: ",premise_name)
+    context={
+        "premise_name":premise_name
+    }
+    return render (request,"myProfile.html",context)
+
+    
 @login_required(login_url='login_user')
 def logout_user(request):
     logout(request)

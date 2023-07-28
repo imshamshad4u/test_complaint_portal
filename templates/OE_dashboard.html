@@ -314,14 +314,14 @@
                         <div class="collapse" id="collapseAccount" aria-labelledby="headingAccount"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="" style="color: aliceblue;">
+                                <a class="nav-link" href="{% url 'myProfile' request.user.id %}" style="color: aliceblue;">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                     My Profile
                                 </a>
-                                <a class="nav-link" href="" style="color: aliceblue;">
+                                <!--<a class="nav-link" href="" style="color: aliceblue;">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-arrow-rotate-right"></i></div>
                                     My History
-                                </a>
+                                </a>-->
                             </nav>
                         </div>
 
@@ -340,6 +340,9 @@
                     {% block all_complaint_table %}
                     <!-- Content of the apps... -->
                     {% endblock %}
+                    {% block myProfile %}
+                        
+                    {% endblock %}
                 </div>
             </main>
         </div>
@@ -347,6 +350,7 @@
 
 
     {% else %}
+    <!-- ####   customer dashboard starts  ####### -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion" id="sidenavAccordion" style="background-color: rgb(38, 77, 111);">
@@ -404,7 +408,7 @@
                         <div class="collapse" id="collapseAccount" aria-labelledby="headingAccount"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="" style="color: aliceblue;">
+                                <a class="nav-link" href="{% url 'myProfile' request.user.id %}" style="color: aliceblue;">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                                     My Profile
                                 </a>
@@ -435,6 +439,9 @@
                     {% endblock %}
                     
                     {% block view_logs %}
+                    {% endblock %}
+                    {% block myProfileUser %}
+                        
                     {% endblock %}
                 </div>
             </main>

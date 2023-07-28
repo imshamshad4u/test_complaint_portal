@@ -25,4 +25,7 @@ urlpatterns = [
     path('update_complaint_status/<int:id>',
          views.update_complaint_status, name="update_complaint_status"),
     path('complaint_feedback/',views.complaint_feedback,name="complaint_feedback"),
+
+    ### prifile of anyone ###
+    path("myProfile/<int:id>",views.myProfile,name="myProfile")
 ]
