@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
-from social_django.views import auth as social_auth
 import requests
 from django.http import HttpResponseRedirect
 import json
